@@ -4,6 +4,43 @@ saldo_destino = 0;
 usuario_destino = 'nome_qualquer';
 variavel_auxiliar = 0;
 
+#Funções do App
+def checar_saldo():
+  print(f'Seu saldo atual é de R${saldo:,.2f}');
+
+def deposita_valor():
+  global saldo;
+
+  print('Por favor, informe qual o valor a ser depositado na sua conta:');
+  saldo += float(input());
+  print(f'Valor depositado com sucesso! Seu saldo atual é de R${saldo:,.2f}');
+
+def transfere_valor(categoria):
+  global saldo, saldo_destino, variavel_auxiliar, usuario_destino;
+
+  if categoria == '2': #Caso o user for "Lojista"
+      print('Desculpe, lojistas não têm permissão para realizar transferências, somente receber de outros usuários.');
+  else: #Caso o user for "Usuário"
+    print('Para quem você deseja transferir?');
+    usuario_destino = str(input());
+    print(f'Qual valor você deseja transferir para {usuario_destino}?');
+    try:
+      variavel_auxiliar = float(input());
+    except ValueError:
+      print('Valor inválido! Operação encerrada.');
+      return;
+    if variavel_auxiliar > saldo:
+      print('Desculpe, você não tem saldo suficiente para realizar essa transferência!');
+    else:
+      saldo_destino += variavel_auxiliar;
+      saldo -= variavel_auxiliar;
+      print('Sua transferência foi realizada com sucesso!');
+      print(f'Seu saldo é de R${saldo}');
+      print(f'O saldo de {usuario_destino} é de R${saldo_destino}');
+
+def sair_do_app():
+  print('Obrigado por utilizar nosso App! Até breve =)');
+
 #Inicialização da Interface
 print('##########################################');
 print('# Bem-vindo(a) ao FourLions Banking App! #');
@@ -22,46 +59,30 @@ while categoria != '1' and categoria != '2':
 #Loop de utilização da interface
 while 1: 
   if(categoria == '1'):
-    print('Olá, usuário! Qual operação deseja fazer hoje? (depositar, checar saldo, transferência, sair)');
+    print('Olá, usuário! Qual operação deseja fazer hoje? (checar saldo, depositar, transferência, sair)');
   elif(categoria == '2'):
-    print('Olá, lojista! Qual operação deseja fazer hoje? (depositar, checar saldo, transferência, sair)');
+    print('Olá, lojista! Qual operação deseja fazer hoje? (checar saldo, depositar, transferência, sair)');
 
   operacao = str(input());
 
-  #Operação de Depósito
-  if (operacao == 'depositar'):
-    print('Por favor, informe qual o valor a ser depositado na sua conta:');
-    saldo += int(input());
-    print('Valor depositado com sucesso! Seu saldo atual é de R$' + str(saldo));
-  
   #Operação de Checagem de Saldo
-  elif (operacao == 'checar saldo' or operacao == 'saldo'):
-    print('Seu saldo atual é de R$' + str(saldo));
+  if (operacao == 'checar saldo' or operacao == 'saldo'):
+    checar_saldo();
+  
+  #Operação de Depósito
+  elif (operacao == 'depositar' or operacao == 'deposito' or operacao == 'depósito'):
+    deposita_valor();
   
   #Operação de Transferência
   elif (operacao == 'transferência' or operacao == 'transferencia' or operacao == 'transferir'):
-    if categoria == 2: #Caso o user for Lojista
-      print('Desculpe, lojistas não têm permissão para realizar transferências, somente receber de outros usuários.');
-    else:
-      print('Para quem você deseja transferir?');
-      usuario_destino = str(input());
-      print('Qual valor você deseja transferir para ' + usuario_destino + '?');
-      variavel_auxiliar = int(input());
-      if variavel_auxiliar > saldo:
-        print('Desculpe, você não tem saldo suficiente para realizar essa transferência!');
-      else:
-        saldo_destino += variavel_auxiliar;
-        saldo -= variavel_auxiliar;
-        print('Sua transferência foi realizada com sucesso!');
-        print('Seu saldo é de R$' + str(saldo));
-        print('O saldo de ' + usuario_destino + ' é de R$' + str(saldo_destino));
+    transfere_valor(categoria);
   
   #Operação de saída do App
   elif (operacao == 'sair'):
-    print('Obrigado por utilizar nosso App! Até breve =)');
+    sair_do_app();
     break;
   
   #Caso a operação escolhida for inválida
   else:
-    print('Não entendi. Por favor selecione uma operação válida!');
+    print('Desculpe, não entendi. Por favor selecione uma operação válida!');
 
