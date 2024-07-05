@@ -12,8 +12,11 @@ def deposita_valor():
   global saldo;
 
   print('Por favor, informe qual o valor a ser depositado na sua conta:');
-  saldo += float(input());
-  print(f'Valor depositado com sucesso! Seu saldo atual é de R${saldo:,.2f}');
+  try:
+    saldo += float(input());
+    print(f'Valor depositado com sucesso! Seu saldo atual é de R${saldo:,.2f}');
+  except ValueError:
+    print('Valor inválido! Operação encerrada.');
 
 def transfere_valor(categoria):
   global saldo, saldo_destino, variavel_auxiliar, usuario_destino;
