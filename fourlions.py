@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 #Declaração de Variáveis
 saldo = 0;
 saldo_destino = 0;
