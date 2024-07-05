@@ -12,7 +12,14 @@ git clone https://github.com/FelipeGardenghiDev/fourlions-banking-app.git
 
 ## Usabilidade
 
-Basta rodar o arquivo 'fourlions.exe'.
+No Windows, basta rodar o arquivo 'fourlions.exe'.
+
+No Linux, através da linha de comando insira:
+```bash
+chmod +x fourlions.py
+```
+
+para criar um arquivo executável, e em seguida execute-o.
 
 Funcionalidades:
 
